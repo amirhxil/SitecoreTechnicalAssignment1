@@ -3,17 +3,14 @@ package Minefield;
 public class MinefieldNavigation {
 
     static char[][] minefield = {
-                /* 2nd example can try
-
-        {' ', ' ', 'X', 'X', ' '},
+        /* 2nd example can try
+        {' ', 'X', 'X', ' ', ' '},
         {'X', 'X', ' ', 'X', ' '},
         {' ', 'X', 'X', ' ', 'X'},
         {'X', ' ', 'X', ' ', 'X'},
         {' ', 'X', ' ', 'X', 'X'}
-
-                 */
-
-        {' ', 'X', 'X', ' ', ' '},
+         */
+        {' ', ' ', 'X', 'X', ' '},
         {'X', 'X', ' ', 'X', ' '},
         {' ', 'X', 'X', ' ', 'X'},
         {'X', ' ', 'X', ' ', 'X'},
@@ -50,23 +47,22 @@ public class MinefieldNavigation {
             for (int colOffset = -1; colOffset <= 1; colOffset++) {
                 int newRow = totoRow + 1;  // Move one row ahead
                 int newCol = totoCol + colOffset;
-                int prevTotoCol=0, prevTotoRow=0;
 
                 // Ensure the new position is within bounds and is safe (not a bomb)
                 if (newCol >= 0 && newCol < minefield[0].length && newRow < minefield.length && minefield[newRow][newCol] == ' ') {
 
                     
                     // Move Totoshka
-                    prevTotoRow = totoRow;
-                    prevTotoCol = totoCol;
+                    lastTotoRow = totoRow;
+                    lastTotoCol = totoCol;
                     totoRow = newRow;
                     totoCol = newCol;
                     minefield[totoRow][totoCol] = '√'; // Mark the new position as part of the path
                     moved = true;
 
                     //Ally move to the previous position of Totoshka
-                    allyRow = prevTotoRow;
-                    allyCol = prevTotoCol;
+                    allyRow = lastTotoRow;
+                    allyCol = lastTotoCol;
                     
                     break;
                 }
@@ -111,8 +107,7 @@ public class MinefieldNavigation {
             for (int j = 0; j < minefield[i].length; j++) {
                 System.out.print(minefield[i][j] + " ");
             }
-            System.out.println();
-        }
+            System.out.println();        }
     }
 
     // Helper method to check if a move is valid (i.e., the cell is empty)
