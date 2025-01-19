@@ -13,9 +13,9 @@ public class Line {
         end.move(dx, dy);
     }
 
-    public void rotate(double angle) {
-        start.rotate(angle);
-        end.rotate(angle);
+    public void rotate(int angle, String direction) {
+        start.rotate(angle, direction);
+        end.rotate(angle, direction);
     }
 
     @Override

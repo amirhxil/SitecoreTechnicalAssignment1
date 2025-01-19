@@ -24,8 +24,8 @@ public class PalindromeChecker {
     }
 
     public static void main(String[] args) {
-        System.out.println(isPalindrome("a@b!!b$a", "!@$")); // true
-        System.out.println(isPalindrome("?Aa#c", "#?"));    // false
+        System.out.println(isPalindrome("a@b!!b$a", "!@$")); 
+        System.out.println(isPalindrome("?Aa#c", "#?"));    
     }
 }
 

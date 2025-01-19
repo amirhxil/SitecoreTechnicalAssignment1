@@ -13,8 +13,11 @@ public class Point {
         y += dy;
     }
 
-    public void rotate(double angle) {
+    public void rotate(int angle, String direction) {
         double radians = Math.toRadians(angle);
+        if ("left".equals(direction)) {
+            radians = -radians;
+        }
         double newX = x * Math.cos(radians) - y * Math.sin(radians);
         double newY = x * Math.sin(radians) + y * Math.cos(radians);
         x = newX;

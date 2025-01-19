@@ -13,8 +13,8 @@ public class Circle {
         center.move(dx, dy);
     }
 
-    public void rotate(double angle) {
-        // A circle doesn't change on rotation.
+    public void rotate(int angle, String direction) {
+        center.rotate(angle, direction);
     }
 
     @Override
