@@ -42,16 +42,19 @@ public class MinefieldNavigation {
         while (totoRow < minefield.length) {
             // Totoshka will look for the next valid field to move to (empty space)
             boolean moved = false;
+            int newRow = totoRow + 1;  // Move one row ahead
 
             // Look ahead and find the best move (consider 1 row ahead)
             for (int colOffset = -1; colOffset <= 1; colOffset++) {
-                int newRow = totoRow + 1;  // Move one row ahead
                 int newCol = totoCol + colOffset;
 
-                // Ensure the new position is within bounds and is safe (not a bomb)
-                if (newCol >= 0 && newCol < minefield[0].length && newRow < minefield.length && minefield[newRow][newCol] == ' ') {
-
-                    
+                 // Ensure the new position is within bounds and is safe (not a bomb)
+                if (isValidMove(newRow, newCol) ) {
+        // Check moves in the next row only if newRow is not the last row
+        if (newRow == minefield.length - 1 || 
+            isValidMove(newRow + 1, newCol) || 
+            isValidMove(newRow + 1, newCol - 1) || 
+            isValidMove(newRow + 1, newCol + 1)) {
                     // Move Totoshka
                     lastTotoRow = totoRow;
                     lastTotoCol = totoCol;
@@ -65,11 +68,15 @@ public class MinefieldNavigation {
                     allyCol = lastTotoCol;
                     
                     break;
+                    }
                 }
+            
             }
 
             // If no valid moves for Totoshka, exit the loop
             if (!moved) {
+            lastTotoRow = totoRow;
+            lastTotoCol = totoCol;
                 break;
             }
 
@@ -77,22 +84,17 @@ public class MinefieldNavigation {
             System.out.println("Step " + stepCount + ": Totoshka at (" + totoRow + ", " + totoCol + ")");
             System.out.println("Ally moved to (" + allyRow + ", " + allyCol + ")");
 
-            // Track the last position of Totoshka
-            lastTotoRow = totoRow;
-            lastTotoCol = totoCol;
-
             stepCount++;
         }
 
         // If no valid moves are left for Totoshka, update step 6 and step 7
-        if (totoRow >= 0 && totoRow < minefield.length) {
             System.out.println("Step 6: Totoshka has exited the field.");
             allyRow = lastTotoRow;
             allyCol = lastTotoCol;
             System.out.println("Ally moved to (" + allyRow + ", " + allyCol + ")");
             System.out.println("Step 7: Ally has exited the field.");
 
-        }
+        
 
         // Final positions
         System.out.println("\nFinal Grid:");
@@ -107,7 +109,8 @@ public class MinefieldNavigation {
             for (int j = 0; j < minefield[i].length; j++) {
                 System.out.print(minefield[i][j] + " ");
             }
-            System.out.println();        }
+            System.out.println();        
+        }
     }
 
     // Helper method to check if a move is valid (i.e., the cell is empty)
