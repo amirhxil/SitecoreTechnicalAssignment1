@@ -3,20 +3,21 @@ package Minefield;
 public class MinefieldNavigation {
 
     static char[][] minefield = {
+                /* 2nd example can try
+
         {' ', ' ', 'X', 'X', ' '},
         {'X', 'X', ' ', 'X', ' '},
         {' ', 'X', 'X', ' ', 'X'},
         {'X', ' ', 'X', ' ', 'X'},
         {' ', 'X', ' ', 'X', 'X'}
 
-        
-        /* 2nd example can try
+                 */
+
         {' ', 'X', 'X', ' ', ' '},
         {'X', 'X', ' ', 'X', ' '},
         {' ', 'X', 'X', ' ', 'X'},
         {'X', ' ', 'X', ' ', 'X'},
         {' ', 'X', ' ', 'X', 'X'}
-         */
     };
 
     public static void main(String[] args) {
@@ -39,7 +40,6 @@ public class MinefieldNavigation {
 
         // Simulate the movement of Totoshka and Ally
         int stepCount = 2;  // Start counting from step 2
-        boolean allyStarted = false;  // Flag to track if Ally has started
         int lastTotoRow = totoRow, lastTotoCol = totoCol;  // To track the last position of Totoshka
 
         while (totoRow < minefield.length) {
@@ -50,25 +50,24 @@ public class MinefieldNavigation {
             for (int colOffset = -1; colOffset <= 1; colOffset++) {
                 int newRow = totoRow + 1;  // Move one row ahead
                 int newCol = totoCol + colOffset;
+                int prevTotoCol=0, prevTotoRow=0;
 
                 // Ensure the new position is within bounds and is safe (not a bomb)
                 if (newCol >= 0 && newCol < minefield[0].length && newRow < minefield.length && minefield[newRow][newCol] == ' ') {
-                    // Before moving Totoshka, update Ally's position to where Totoshka was
-                    if (!allyStarted && newRow > 0) {  // Ally starts only after Totoshka has moved to row 1
-                        allyRow = 0;
-                        allyCol = totoCol;  // Ally starts at the same column as Totoshka previously
-                        allyStarted = true;
-                    } else {
-                        // Move Ally to where Totoshka was
-                        allyRow = totoRow;
-                        allyCol = totoCol;
-                    }
+
                     
                     // Move Totoshka
+                    prevTotoRow = totoRow;
+                    prevTotoCol = totoCol;
                     totoRow = newRow;
                     totoCol = newCol;
                     minefield[totoRow][totoCol] = '√'; // Mark the new position as part of the path
                     moved = true;
+
+                    //Ally move to the previous position of Totoshka
+                    allyRow = prevTotoRow;
+                    allyCol = prevTotoCol;
+                    
                     break;
                 }
             }
